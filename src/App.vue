@@ -24,6 +24,6 @@ export default {
 
 <style scoped>
 .stallions-content {
-  background-color: #b3cde0;
+  background-color: white;
 }
 </style>

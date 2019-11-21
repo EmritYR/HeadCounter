@@ -1,56 +1,47 @@
 <template>
-  <v-footer color="primary darken-1" padless dark>
-    <v-row justify="center" no-gutters>
-      <v-btn
-        v-for="link in links"
-        :key="link"
-        color="white"
-        text
-        rounded
-        class="my-2"
-        :href="link.href"
-      >
-        {{ link.text }}
-      </v-btn>
-      <v-col class="primary darken-3 py-4 text-center white--text" cols="12">
-        {{ new Date().getFullYear() }} — <strong>Stallions</strong>
-      </v-col>
-    </v-row>
+  <v-footer padless>
+    <v-col class="text-center" cols="12">
+      {{ new Date().getFullYear() }} —
+      <img
+        alt="logo stallions"
+        id="stallions_logo"
+        src="../assets/stallions_logo.png"
+      />
+      <strong>Stallions</strong>
+    </v-col>
   </v-footer>
 </template>
 
 <script>
 export default {
+  name: "AppFooter",
   data: () => ({
-    links: [
-      {
-        text: "Home",
-        href: "/home"
-      },
-      {
-        text: "About Us",
-        href: "/about"
-      },
-      {
-        text: "Team",
-        href: "/team"
-      },
-      {
-        text: "Services",
-        href: "/services"
-      },
-      {
-        text: "Blog",
-        href: "/blog"
-      },
-      {
-        text: "Contact Us",
-        href: "/contact"
-      }
-    ]
+    icons: ["mdi-home", "mdi-email", "mdi-calendar", "mdi-delete"],
+    items: ["default", "absolute", "fixed"],
+    padless: false,
+    variant: "default"
   }),
-  name: "AppFooter"
+  computed: {
+    localAttrs() {
+      const attrs = {};
+
+      if (this.variant === "default") {
+        attrs.absolute = false;
+        attrs.fixed = false;
+      } else {
+        attrs[this.variant] = true;
+      }
+      return attrs;
+    }
+  }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#stallions_logo {
+  width: 2%;
+  height: 2%;
+  margin-bottom: 3px;
+  padding-right: 5px;
+}
+</style>
