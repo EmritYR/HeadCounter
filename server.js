@@ -4,7 +4,9 @@ const path = require("path");
 /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /*** Hosting server for heroku  ***/
 const app = express();
+const cors = require("cors");
 app.use("/", serveStatic(path.join(__dirname, "/dist")));
+app.use(cors());
 
 const port = process.env.PORT || 3000;
 app.listen(port);
