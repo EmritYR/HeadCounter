@@ -6,4 +6,3 @@ const pool = new Pool({
   password: "aaf3efea7997f8b655d1b34dcffd6c3c5664eafdc4fb58591adef8df6b780a15",
   port: 5432
 });
-
