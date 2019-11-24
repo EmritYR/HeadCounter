@@ -6,9 +6,9 @@ const path = require("path");
 const app = express();
 app.use("/", serveStatic(path.join(__dirname, "/dist")));
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 app.listen(port);
-console.log("App listening on port: " + port)
+console.log("App listening on port: " + port);
 /*** End Hosting server for heroku  ***/
 
 const { Client } = require("pg");
@@ -21,9 +21,8 @@ const client = new Client({
 
 client.connect();
 
-
 app.get("/account", function(req, res) {
-  client.query("SELECT * FROM lecturer", [1], function(err, result) {
+  client.query("SELECT * FROM lecturer", function(err, result) {
     if (err) {
       console.log(err);
       res.status(400).send(err);
@@ -31,5 +30,3 @@ app.get("/account", function(req, res) {
     res.status(200).send(result.rows);
   });
 });
-
-
