@@ -1,5 +1,31 @@
 <template>
   <v-container>
+    <v-card class="mx-auto" max-width="544">
+      <v-card-text>
+        <p class="display-1 text--primary">
+          Welcome to Headcounter
+        </p>
+        <div class="text--primary">
+          This is where we eliminate paper with our attendance tracker.
+        </div>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-btn text color="blue accent-4">
+          View Logs
+        </v-btn>
+      </v-card-actions>
+      <v-card-actions>
+        <v-btn text color="blue accent-4">
+          Add Student
+        </v-btn>
+      </v-card-actions>
+      <v-card-actions>
+        <v-btn text color="blue accent-4">
+          Remove Student
+        </v-btn>
+      </v-card-actions>
+    </v-card>
     <v-layout text-center wrap>
       <v-flex mb-10 xs12>
         <h2 class="headline font-weight-bold mb-3">Current Projects</h2>

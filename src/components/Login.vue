@@ -27,7 +27,7 @@
           </v-card-text>
           <v-card-actions>
             <div class="flex-grow-1"></div>
-            <v-btn color="primary">Login</v-btn>
+            <v-btn color="primary" @click.prevent="login">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -49,6 +49,11 @@ export default {
         ) || "Email must be valid"
     ]
   }),
+  methods: {
+    login() {
+      this.$router.push("/");
+    }
+  },
   name: "Login"
 };
 </script>

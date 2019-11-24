@@ -54,9 +54,24 @@ export default new Router({
       component: () => import("./views/COMP3603.vue")
     },
     {
-      path: "/COMP3613",
-      name: "COMP3613",
-      component: () => import("./views/COMP3613.vue")
+      path: "/add",
+      name: "AddStudent",
+      component: () => import("./components/AddStudent.vue")
+    },
+    {
+      path: "/remove",
+      name: "RemoveStudent",
+      component: () => import("./components/RemoveStudent.vue")
+    },
+    {
+      path: "/viewlogs",
+      name: "RemoveStudent",
+      component: () => import("./components/ViewLogs.vue")
+    },
+    {
+      path: "/viewLecture",
+      name: "ViewLecture",
+      component: () => import("./components/ViewLecture.vue")
     },
     {
       path: "/404",
