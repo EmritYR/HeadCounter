@@ -10,6 +10,7 @@ import store from "./stores/store";
 
 Vue.config.productionTip = false;
 
+
 // axios.defaults.baseURL("/")
 
 new Vue({

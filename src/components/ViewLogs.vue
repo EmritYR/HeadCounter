@@ -28,6 +28,9 @@
 </template>
 
 <script>
+/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
+import axios from "axios";
+
 export default {
   name: "ViewLogs",
   data() {
@@ -75,6 +78,11 @@ export default {
         }
       ]
     };
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/account")
+      .then(response => console.log(response));
   }
 };
 </script>
