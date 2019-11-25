@@ -25,47 +25,26 @@ const router = new Router({
     {
       path: "/",
       name: "home",
-      component: Home
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/home",
       name: "home",
-      component: Home
-    },
-    {
-      path: "/about",
-      name: "about",
-      component: () => import("./views/About.vue")
-    },
-    {
-      path: "/team",
-      name: "team",
-      component: () => import("./views/Team.vue")
-    },
-    {
-      path: "/services",
-      name: "services",
-      component: () => import("./views/Services.vue")
-    },
-    {
-      path: "/blog",
-      name: "blog",
-      component: () => import("./views/Blog.vue")
-    },
-    {
-      path: "/contact",
-      name: "contact",
-      component: () => import("./views/Contact.vue")
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/account",
       name: "account",
-      component: () => import("./views/Account.vue")
-    },
-    {
-      path: "/COMP3603",
-      name: "COMP3603",
-      component: () => import("./views/COMP3603.vue")
+      component: () => import("./views/Account.vue"),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/add",
@@ -78,17 +57,26 @@ const router = new Router({
     {
       path: "/remove",
       name: "RemoveStudent",
-      component: () => import("./components/RemoveStudent.vue")
+      component: () => import("./components/RemoveStudent.vue"),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/viewlogs",
       name: "RemoveStudent",
-      component: () => import("./components/ViewLogs.vue")
+      component: () => import("./components/ViewLogs.vue"),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/viewLecture",
       name: "ViewLecture",
-      component: () => import("./components/ViewLecture.vue")
+      component: () => import("./components/ViewLecture.vue"),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/login",

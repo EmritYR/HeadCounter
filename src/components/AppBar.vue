@@ -5,20 +5,20 @@
       <span class="font-weight-light"> by Stallions. </span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn icon>
-      <router-link to="/"><v-icon>mdi-home-circle</v-icon></router-link>
-    </v-btn>
-    <v-btn icon>
-      <router-link to="/add"><v-icon>mdi-plus-circle</v-icon></router-link>
-    </v-btn>
-    <v-btn icon>
-      <router-link to="/remove"><v-icon>mdi-delete-circle</v-icon></router-link>
-    </v-btn>
-    <v-btn icon>
-      <router-link to="/viewlogs"><v-icon>mdi-book-open</v-icon></router-link>
-    </v-btn>
+<!--    <v-btn icon>-->
+<!--      <router-link to="/"><v-icon>mdi-home-circle</v-icon></router-link>-->
+<!--    </v-btn>-->
+<!--    <v-btn icon>-->
+<!--      <router-link to="/add"><v-icon>mdi-plus-circle</v-icon></router-link>-->
+<!--    </v-btn>-->
+<!--    <v-btn icon>-->
+<!--      <router-link to="/remove"><v-icon>mdi-delete-circle</v-icon></router-link>-->
+<!--    </v-btn>-->
+<!--    <v-btn icon>-->
+<!--      <router-link to="/viewlogs"><v-icon>mdi-book-open</v-icon></router-link>-->
+<!--    </v-btn>-->
     <v-btn @click="logout" class="logout" icon>
-      <v-icon>mdi-window-close</v-icon>
+      <v-icon>mdi-logout</v-icon>
     </v-btn>
   </v-app-bar>
 </template>

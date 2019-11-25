@@ -56,6 +56,27 @@ export default new Vuex.Store({
       });
     },
 
+    getCourses({ commit }, user) {
+      return new Promise((resolve, reject) => {
+        commit("auth_request");
+        axios({
+          url: "http://localhost:3000/courses",
+          method: "GET"
+        })
+          .then(resp => {
+            const courses = resp.data.user;
+            localStorage.setItem("courses", JSON.stringify(courses));
+            resolve(resp);
+          })
+          .catch(err => {
+            commit("auth_error");
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            reject(err);
+          });
+      });
+    },
+
     logout({ commit }) {
       return new Promise(resolve => {
         commit("logout");
