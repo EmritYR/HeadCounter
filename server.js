@@ -173,14 +173,15 @@ app.get('/courses/:course_id', passport.authenticate('jwt', {session:false}), (r
 app.get("/:id/courses", passport.authenticate('jwt', {session:false}), (req, res) => {
   const id = parseInt(req.params.id);
 
-  var sql = SqlString.format('SELECT course.course_id, course.name FROM course JOIN course_lecturer ON course_lecturers.course_id = course.course_id WHERE course_lecturers.lecturer_id = ?', [id]);
+  var sql = SqlString.format('SELECT course.course_id, course.name FROM course JOIN course_lecturers ON course_lecturers.course_id = course.course_id WHERE course_lecturers.lecturer_id = ?', [id]);
 
   client.query(sql, function(err, result) {
     if (err) {
       console.log(err);
       res.status(400).send(err);
     }
-    res.status(200).send(result.rows);
+    else
+      res.status(200).send(result.rows);
   });
 });
 
