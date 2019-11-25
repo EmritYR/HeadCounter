@@ -168,8 +168,8 @@ app.get('/courses/:course_id', passport.authenticate('jwt', {session:false}), (r
 //   });
 // });
 
-app.get("/courses", passport.authenticate('jwt', {session:false}), (req, res) => {
-  const id = parseInt(req.body.id);
+app.get("/:id/courses", passport.authenticate('jwt', {session:false}), (req, res) => {
+  const id = parseInt(req.params.id);
 
   var sql = SqlString.format('SELECT course.course_id, course.name FROM course JOIN course_lecturer ON course_lecturers.course_id = course.course_id WHERE course_lecturers.lecturer_id = ?', [id]);
 
