@@ -7,7 +7,164 @@
             mdi-account-circle
           </v-icon>
           <span class="title font-weight-light">{{ lecturer_name }}</span>
+          <v-spacer></v-spacer>
+          <span class="overline font-weight-light">Lecturer ID: {{ lecturer_id }}</span>
         </v-card-title>
+
+        <v-row style="margin-left: 50px">
+          <v-dialog v-model="dialog1" persistent max-width="600px">
+            <template v-slot:activator="{ on }">
+              <v-btn
+                class="ma-2"
+                style="float: right"
+                outlined
+                color="teal"
+                dark
+                v-on="on"
+                >Add Course</v-btn
+              >
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">Add a course</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Course Code*"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Course Title*"
+                        hint="(i.e. 'Software Engineering II')"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Course Description*"
+                        hint="This course teaches software engineering principles"
+                        persistent-hint
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="dialog1 = false"
+                  >Cancel</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="dialog1 = false"
+                  >Add Course</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+          <v-dialog v-model="dialog2" persistent max-width="600px">
+            <template v-slot:activator="{ on }">
+              <v-btn
+                class="ma-2"
+                style="float: right"
+                outlined
+                color="teal"
+                dark
+                v-on="on"
+                >Add Lecturer</v-btn
+              >
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">Add Lecturer</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field label="Full Name*" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Lecturer ID*"
+                        hint="ID number"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        label="Password*"
+                        type="password"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="dialog2 = false"
+                  >Cancel</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="dialog2 = false"
+                  >Add Lecturer</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+          <v-dialog v-model="dialog3" persistent max-width="600px">
+            <template v-slot:activator="{ on }">
+              <v-btn
+                class="ma-2"
+                style="float: right"
+                outlined
+                color="teal"
+                dark
+                v-on="on"
+                >Assign Lecturer</v-btn
+              >
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">Assign Lecturer to a course</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Lecturer ID*"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Course Code*"
+                        hint="(i.e. 'COMP3613')"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="dialog3 = false"
+                  >Cancel</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="dialog3 = false"
+                  >Assign Lecturer</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
 
         <v-card-text
           style="margin-left: 40px"
@@ -28,28 +185,6 @@
               course.course_name
             }}</span>
           </v-card-title>
-
-          <!--        <v-card-actions>-->
-          <!--          <v-list-item class="grow">-->
-          <!--            <v-btn icon>-->
-          <!--              <router-link to="/add"-->
-          <!--                ><v-icon>mdi-plus-circle</v-icon></router-link-->
-          <!--              >-->
-          <!--            </v-btn>-->
-          <!--            Add Student-->
-          <!--          </v-list-item>-->
-          <!--        </v-card-actions>-->
-
-          <!--        <v-card-actions>-->
-          <!--          <v-list-item class="grow">-->
-          <!--            <v-btn icon>-->
-          <!--              <router-link to="/"-->
-          <!--                ><v-icon>mdi-delete-circle</v-icon></router-link-->
-          <!--              >-->
-          <!--            </v-btn>-->
-          <!--            Remove Student-->
-          <!--          </v-list-item>-->
-          <!--        </v-card-actions>-->
 
           <v-card-actions>
             <v-list-item class="grow">
@@ -75,17 +210,22 @@ export default {
   // components: { Feed, Introduction },
   data() {
     return {
-      lecturer_name: "Inzamam Rahaman",
-      courses: []
+      lecturer_name: JSON.parse(localStorage.getItem("user")).name,
+      lecturer_id: JSON.parse(localStorage.getItem("user")).id,
+      courses: [],
+      dialog1: false,
+      dialog2: false,
+      dialog3: false
     };
   },
   methods: {
-    getCourses: function() {
-      this.$store
-        .dispatch("login", { id, password })
-        .then(() => this.$router.push("/"))
-        .catch(err => console.log(err));
-    }
+
+    // getCourses: function() {
+    //   this.$store
+    //     .dispatch("login", { id, password })
+    //     .then(() => this.$router.push("/"))
+    //     .catch(err => console.log(err));
+    // }
   }
 };
 </script>
