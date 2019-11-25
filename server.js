@@ -112,7 +112,7 @@ app.post('/add-course', passport.authenticate('jwt', {session:false}), (req, res
   const name = req.body.name;
   const url = req.body.url;
   const description = req.body.description;
-  const id = parseInt(req.body.id);
+  const id = req.body.id;
   var sql = SqlString.format('INSERT INTO course (course_id, description, img_url, name) VALUES (?,?,?,?)', [id, description, url, name]);
 
   client.query(sql, (err, result) => {
@@ -120,7 +120,8 @@ app.post('/add-course', passport.authenticate('jwt', {session:false}), (req, res
       console.log(err);
       res.status(400).send(err);
     }
-    res.status(201).send(`Course added`)
+    else
+      res.status(201).send(`Course added`)
   });
 });
 
@@ -134,7 +135,8 @@ app.post('/assign-lecturer', passport.authenticate('jwt', {session:false}), (req
       console.log(err);
       res.status(400).send(err);
     }
-    res.status(201).send(`Lecturer Assigned`)
+    else
+      res.status(201).send(`Lecturer Assigned`)
   });
 });
 
@@ -227,7 +229,7 @@ function usePassport (passport) {
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
   opts.secretOrKey = config.secret;
   passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
-    client.query('SELECT * FROM lecturer WHERE lecturer_id = ' + SqlString.escape(jwt_payload.data._id), (err, user) => {
+    client.query('SELECT * FROM lecturer WHERE lecturer_id = ' + SqlString.escape(jwt_payload.data.lecturer_id), (err, user) => {
       if(err) {
         return done(err, false);
       }
