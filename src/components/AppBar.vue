@@ -17,15 +17,22 @@
     <v-btn icon>
       <router-link to="/viewlogs"><v-icon>mdi-book-open</v-icon></router-link>
     </v-btn>
-    <v-btn class="logout" icon>
-      <router-link to="/account"><v-icon>mdi-window-close</v-icon></router-link>
+    <v-btn @click="logout" class="logout" icon>
+      <v-icon>mdi-window-close</v-icon>
     </v-btn>
   </v-app-bar>
 </template>
 
 <script>
 export default {
-  name: "AppBar"
+  name: "AppBar",
+  methods: {
+    logout: function() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
+      });
+    }
+  }
 };
 </script>
 

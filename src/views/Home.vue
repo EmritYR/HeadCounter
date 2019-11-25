@@ -12,7 +12,7 @@
         <v-card-actions>
           <v-list-item class="grow">
             <v-btn icon>
-              <router-link to="/account"
+              <router-link to="/add"
                 ><v-icon>mdi-plus-circle</v-icon></router-link
               >
             </v-btn>
