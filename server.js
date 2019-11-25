@@ -127,8 +127,8 @@ app.post('/add-course', passport.authenticate('jwt', {session:false}), (req, res
 
 app.post('/assign-lecturer', passport.authenticate('jwt', {session:false}), (req, res) => {
   const lid = parseInt(req.body.lecturer_id);
-  const cid = parseInt(req.body.course_id);
-  var sql = SqlString.format('INSERT INTO course_lecturers (course_id, lecturer_id) VALUES (?,?,?,?)', [cid, lid]);
+  const cid = req.body.course_id;
+  var sql = SqlString.format('INSERT INTO course_lecturers (course_id, lecturer_id) VALUES (?,?)', [cid, lid]);
 
   client.query(sql, (err, result) => {
     if (err) {
