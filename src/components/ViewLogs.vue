@@ -7,8 +7,8 @@
             mdi-book-open
           </v-icon>
           <span class="title font-weight-light"
-            >Class Sessions for {{ this.$route.params.course_id }} -
-            {{ this.$route.params.course_name }}</span
+            >Class Sessions for {{ this.course_id }} -
+            {{ this.course_name }}</span
           >
           <v-spacer></v-spacer>
         </v-card-title>
@@ -17,12 +17,12 @@
           style="margin-left: 40px"
           class="headline font-weight-bold"
         >
-          Here's a list of it's class sessions that you taught.
+          Here's a list of the class sessions that you taught.
         </v-card-text>
       </v-card>
     </div>
     <div class="bottom">
-      <div class="course_cards" v-for="(classSession, i) in classes" :key="i">
+      <div class="course_cards" v-for="classSession in this.classes">
         <v-card class="mx-auto" color="#001D27" dark max-width="950">
           <v-card-title>
             <v-icon large left>
@@ -55,14 +55,14 @@
           <v-card-actions>
             <v-list-item style="margin-left: 35px" class="grow">
               <router-link
-                :to="{
-                  name: 'ViewLecture',
-                  params: {
-                    class_id: classSession.id,
-                    timestamp: classSession.start_time,
-                    course_id: classSession.course_id
-                  }
-                }"
+                v-bind:to="
+                  '/viewLecture/' +
+                    classSession.id +
+                    '/' +
+                    course_id +
+                    '/' +
+                    classSession.start_time
+                "
               >
                 <v-btn class="ma-2" outlined color="teal"
                   >View {{ classSession.type }} Logs</v-btn
@@ -84,14 +84,17 @@ export default {
   name: "ViewLogs",
   data() {
     return {
-      classes: []
+      course_id: this.$route.params.cid,
+      course_name: this.$route.params.cname,
+      classes: {}
     };
   },
-  mounted() {
+  created() {
     axios
-      .get("http://localhost:3000/courses/" + this.$route.params.course_id)
+      .get("http://localhost:3000/courses/" + this.course_id)
       .then(response => {
         this.classes = response.data;
+        // console.log(this.classes);
       });
   }
 };

@@ -65,7 +65,7 @@ const router = new Router({
       }
     },
     {
-      path: "/viewlogs",
+      path: "/viewlogs/:cid/:cname",
       name: "ViewLogs",
       component: () => import("./components/ViewLogs.vue"),
       meta: {
@@ -74,7 +74,7 @@ const router = new Router({
       props: true
     },
     {
-      path: "/viewLecture",
+      path: "/viewLecture/:clid/:cid/:ts",
       name: "ViewLecture",
       component: () => import("./components/ViewLecture.vue"),
       meta: {

@@ -13,7 +13,7 @@
           >
         </v-card-title>
 
-        <v-row style="margin-left: 50px">
+        <v-row id="admin_panel" style="margin-left: 50px; visibility: hidden">
           <v-dialog v-model="dialog1" persistent max-width="600px">
             <template v-slot:activator="{ on }">
               <v-btn
@@ -177,6 +177,56 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+
+          <v-dialog v-model="dialog3" persistent max-width="600px">
+            <template v-slot:activator="{ on }">
+              <v-btn
+                class="ma-2"
+                style="float: right"
+                outlined
+                color="teal"
+                dark
+                v-on="on"
+                >Create Student</v-btn
+              >
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">Create a Student</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="newStudentID"
+                        label="Student ID*"
+                        required
+                        hint="(i.e. 'REBELBB9')"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="newStudentName"
+                        label="Student's Full Name*"
+                        hint="(i.e. 'Luke Skywalker')"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="dialog4 = false"
+                  >Cancel</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="createStudent"
+                  >Create Student</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-row>
 
         <v-card-text
@@ -203,13 +253,9 @@
             <v-list-item class="grow" color="teal">
               <v-btn class="ma-2" outlined color="teal">
                 <router-link
-                  :to="{
-                    name: 'ViewLogs',
-                    params: {
-                      course_id: course.course_id,
-                      course_name: course.name
-                    }
-                  }"
+                  v-bind:to="
+                    '/viewlogs/' + course.course_id + '/' + course.name
+                  "
                 >
                   <span style="color: teal">View Session Logs</span>
                 </router-link>
@@ -224,11 +270,9 @@
 
 <script>
 /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-// import Feed from "../components/Feed";
 import axios from "axios";
 
 export default {
-  // components: { Feed, Introduction },
   data() {
     return {
       lecturer_name: JSON.parse(localStorage.getItem("user")).name,
@@ -238,8 +282,11 @@ export default {
       dialog1: false,
       dialog2: false,
       dialog3: false,
+      dialog4: false,
       newCourseName: "",
       newCourseDescription: "",
+      newStudentID: "",
+      newStudentName: "",
       newCourseID: "",
       newLecturerID: "",
       newLecturerName: "",
@@ -267,6 +314,22 @@ export default {
       this.newCourseID = "";
       this.newCourseName = "";
       this.newCourseDescription = "";
+    },
+    createStudent: function() {
+      this.dialog4 = false;
+      axios.post(
+        "http://localhost:3000/create-student",
+        {
+          name: this.newStudentName,
+          id: this.newStudentID
+        },
+        {
+          headers: { Authorization: `${this.token}` }
+        }
+      );
+
+      this.newStudentID = "";
+      this.newStudentName = "";
     },
     addLecturer: function() {
       this.dialog2 = false;
@@ -305,7 +368,11 @@ export default {
       this.assignCourseID = "";
     }
   },
+  created() {},
   mounted() {
+    if (this.lecturer_name === "admin")
+      document.getElementById("admin_panel").style.visibility = "visible";
+
     axios
       .get("http://localhost:3000/courses/all/" + this.lecturer_id, {
         headers: { Authorization: `${this.token}` }
