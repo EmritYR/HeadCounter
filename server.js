@@ -160,6 +160,22 @@ app.post('/add-student', passport.authenticate('jwt', {session:false}), (req, re
 });
 
 
+app.post('/create-student', passport.authenticate('jwt', {session:false}), (req, res) => {
+  const name = req.body.name;
+  const student_id = parseInt(req.body.student_id);
+
+  var sql = SqlString.format('INSERT INTO student (student_id, name) VALUES (?,?)', [student_id, name]);
+
+  client.query(sql, (err, result) => {
+    if (err) {
+      res.status(400).send(err);
+    }
+    else
+      res.status(201).send(`Student created`)
+  });
+});
+
+
 app.delete('/delete-student', passport.authenticate('jwt', {session:false}), (req, res) => {
   const class_id = parseInt(req.body.class_id);
   const student_id = parseInt(req.body.student_id);
