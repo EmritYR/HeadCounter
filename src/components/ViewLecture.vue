@@ -138,7 +138,7 @@ export default {
   name: "ViewLecture",
   data() {
     return {
-      students: [],
+      students: {},
       dialog1: false,
       dialog2: false,
       newStudentID: "",
@@ -155,7 +155,7 @@ export default {
       this.dialog2 = false;
       axios
         .delete(
-          "delete-student",
+          "/delete-student",
           {
             data: {
               class_id: this.class_id,
@@ -188,7 +188,7 @@ export default {
     }
   },
   created() {
-    let url = "courses/class/" + this.class_id;
+    let url = "/courses/class/" + this.class_id;
     axios.get(url).then(response => {
       this.students = response.data;
       console.log(this.students);

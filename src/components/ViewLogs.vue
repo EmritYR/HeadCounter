@@ -17,7 +17,7 @@
           style="margin-left: 40px"
           class="headline font-weight-bold"
         >
-          Here's a list of the class sessions that you taught.
+          Here's a list of class sessions that you taught.
         </v-card-text>
       </v-card>
     </div>
@@ -56,12 +56,7 @@
             <v-list-item style="margin-left: 35px" class="grow">
               <router-link
                 v-bind:to="
-                  '/viewLecture/' +
-                    classSession.id +
-                    '/' +
-                    course_id +
-                    '/' +
-                    classSession.start_time
+                  '/viewLecture/' + classSession.id + '/' + course_id + '/' + classSession.start_time
                 "
               >
                 <v-btn class="ma-2" outlined color="teal"
@@ -90,10 +85,12 @@ export default {
     };
   },
   created() {
-    axios.get("courses/" + this.course_id).then(response => {
-      this.classes = response.data;
-      // console.log(this.classes);
-    });
+    axios
+      .get("/courses/" + this.course_id)
+      .then(response => {
+        this.classes = response.data;
+        // console.log(this.classes);
+      });
   }
 };
 </script>

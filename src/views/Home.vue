@@ -279,7 +279,7 @@ export default {
       lecturer_name: JSON.parse(localStorage.getItem("user")).name,
       lecturer_id: JSON.parse(localStorage.getItem("user")).id,
       token: localStorage.getItem("token"),
-      courses: [],
+      courses: {},
       dialog1: false,
       dialog2: false,
       dialog3: false,
@@ -300,7 +300,7 @@ export default {
     addCourse: function() {
       this.dialog1 = false;
       axios.post(
-        "add-course",
+        "/add-course",
         {
           name: this.newCourseName,
           url: "",
@@ -319,7 +319,7 @@ export default {
     createStudent: function() {
       this.dialog4 = false;
       axios.post(
-        "create-student",
+        "/create-student",
         {
           name: this.newStudentName,
           student_id: this.newStudentID
@@ -336,7 +336,7 @@ export default {
       this.dialog2 = false;
 
       axios.post(
-        "register",
+        "/register",
         {
           id: this.newLecturerID,
           name: this.newLecturerName,
@@ -355,7 +355,7 @@ export default {
       this.dialog3 = false;
 
       axios.post(
-        "assign-lecturer",
+        "/assign-lecturer",
         {
           lecturer_id: this.assignLecturerID,
           course_id: this.assignCourseID
@@ -378,7 +378,7 @@ export default {
     }
 
     axios
-      .get("courses/all/" + this.lecturer_id, {
+      .get("/courses/all/" + this.lecturer_id, {
         headers: { Authorization: `${this.token}` }
       })
       .then(response => (this.courses = response.data));

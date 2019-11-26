@@ -41,7 +41,7 @@ app.listen(port, () => console.log("App listening on port: " + port));
 
 // Index Route
 app.get("/", (req, res) => {
-  res.status(122).send("invalid endpoint");
+  res.status(122).send("invaild endpoint");
 });
 
 /*** Routes ***/

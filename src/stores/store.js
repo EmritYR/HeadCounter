@@ -33,7 +33,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
-          url: "authenticate",
+          url: "/authenticate",
           data: user,
           method: "POST"
         })
