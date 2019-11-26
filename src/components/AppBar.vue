@@ -5,6 +5,9 @@
       <span class="font-weight-light"> by Stallions. </span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
+    <v-btn icon>
+      <router-link to="/"><v-icon>mdi-home-circle</v-icon></router-link>
+    </v-btn>
     <v-btn @click="logout" class="logout" icon>
       <v-icon>mdi-logout</v-icon>
     </v-btn>

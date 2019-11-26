@@ -28,7 +28,8 @@ const router = new Router({
       component: Home,
       meta: {
         requiresAuth: true
-      }
+      },
+      props: true
     },
     {
       path: "/home",
@@ -36,7 +37,8 @@ const router = new Router({
       component: Home,
       meta: {
         requiresAuth: true
-      }
+      },
+      props: true
     },
     {
       path: "/account",
@@ -64,11 +66,12 @@ const router = new Router({
     },
     {
       path: "/viewlogs",
-      name: "RemoveStudent",
+      name: "ViewLogs",
       component: () => import("./components/ViewLogs.vue"),
       meta: {
         requiresAuth: true
-      }
+      },
+      props: true
     },
     {
       path: "/viewLecture",

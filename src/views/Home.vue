@@ -92,16 +92,22 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field label="Full Name*" required></v-text-field>
+                      <v-text-field
+                        v-model="newLecturerName"
+                        label="Full Name*"
+                        required
+                      ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
+                        v-model="newLecturerID"
                         label="Lecturer ID*"
                         hint="ID number"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
+                        v-model="newLecturerPassword"
                         label="Password*"
                         type="password"
                         required
@@ -137,19 +143,21 @@
             </template>
             <v-card>
               <v-card-title>
-                <span class="headline">Assign Lecturer to a course</span>
+                <span class="headline">Assign a Lecturer to a course</span>
               </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
+                        v-model="assignLecturerID"
                         label="Lecturer ID*"
                         required
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
+                        v-model="assignCourseID"
                         label="Course Code*"
                         hint="(i.e. 'COMP3613')"
                       ></v-text-field>
@@ -163,7 +171,7 @@
                 <v-btn color="blue darken-1" text @click="dialog3 = false"
                   >Cancel</v-btn
                 >
-                <v-btn color="blue darken-1" text @click="dialog3 = false"
+                <v-btn color="blue darken-1" text @click="assignLecturer"
                   >Assign Lecturer</v-btn
                 >
               </v-card-actions>
@@ -181,7 +189,7 @@
     </div>
     <div class="bottom">
       <div class="course_cards" v-for="(course, i) in courses" :key="i">
-        <v-card class="mx-auto" color="#001D27" dark max-width="800">
+        <v-card class="mx-auto" color="#001D27" dark max-width="950">
           <v-card-title>
             <v-icon large left>
               mdi-library-books
@@ -193,10 +201,18 @@
 
           <v-card-actions>
             <v-list-item class="grow">
-              <v-btn icon>
-                <router-link to="/"><v-icon>mdi-book-open</v-icon></router-link>
+              <v-btn class="ma-2" outlined color="teal">
+                <router-link
+                  :to="{
+                    name: 'ViewLogs',
+                    params: {
+                      course_id: course.course_id,
+                      course_name: course.name
+                    }
+                  }"
+                  >View Logs</router-link
+                >
               </v-btn>
-              View Logs
             </v-list-item>
           </v-card-actions>
         </v-card>
@@ -207,8 +223,6 @@
 
 <script>
 /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-
-// import Introduction from "../components/Introduction";
 // import Feed from "../components/Feed";
 import axios from "axios";
 
@@ -228,7 +242,9 @@ export default {
       newCourseID: "",
       newLecturerID: "",
       newLecturerName: "",
-      newLecturerPassword: ""
+      newLecturerPassword: "",
+      assignLecturerID: "",
+      assignCourseID: ""
     };
   },
   methods: {
@@ -253,6 +269,7 @@ export default {
     },
     addLecturer: function() {
       this.dialog2 = false;
+
       axios.post(
         "http://localhost:3000/register",
         {
@@ -268,6 +285,23 @@ export default {
       this.newLecturerID = "";
       this.newLecturerName = "";
       this.newLecturerPassword = "";
+    },
+    assignLecturer: function() {
+      this.dialog3 = false;
+
+      axios.post(
+        "http://localhost:3000/assign-lecturer",
+        {
+          lecturer_id: this.assignLecturerID,
+          course_id: this.assignCourseID
+        },
+        {
+          headers: { Authorization: `${this.token}` }
+        }
+      );
+
+      this.assignLecturerID = "";
+      this.assignCourseID = "";
     }
   },
   mounted() {

@@ -1,29 +1,46 @@
 <template>
   <v-container>
-    <v-card class="mx-auto" color="#2F3038FF" dark max-width="1000">
-      <v-card-title>
-        <v-icon large left>
-          mdi-library-books
-        </v-icon>
-        <span class="title font-weight-light">COMP</span>
-      </v-card-title>
+    <div class="top">
+      <v-card class="mx-auto" color="#002b36" dark max-width="1000">
+        <v-card-title>
+          <v-icon x-large left>
+            mdi-book-open
+          </v-icon>
+          <span class="title font-weight-light"
+            >Classes for {{ this.$route.params.course_id }} -
+            {{ this.$route.params.course_name }}</span
+          >
+          <v-spacer></v-spacer>
+        </v-card-title>
 
-      <v-card-text class="headline font-weight-bold">
-        Please select a lecture from this course.
-      </v-card-text>
+        <v-card-text
+          style="margin-left: 40px"
+          class="headline font-weight-bold"
+        >
+          Here's a list of the courses that you currently lecture.
+        </v-card-text>
+      </v-card>
+    </div>
+    <div class="bottom">
+      <div class="course_cards" v-for="(classSession, i) in classes" :key="i">
+        <v-card class="mx-auto" color="#001D27" dark max-width="950">
+          <v-card-title>
+            <v-icon large left>
+              mdi-presentation
+            </v-icon>
+            <span class="title font-weight-light"
+              >{{ classSession.type }} - {{ classSession.location }}</span
+            >
+          </v-card-title>
 
-      <div class="table">
-        <v-simple-table>
-          <template>
-            <tbody>
-              <tr v-for="item in desserts" :key="item.name">
-                <td>{{ item.name }}</td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
+          <v-card-actions>
+            <v-list-item class="grow">
+              <v-btn class="ma-2" outlined color="teal">View {{classSession.type}} Logs</v-btn>
+            </v-list-item>
+          </v-card-actions>
+        </v-card>
       </div>
-    </v-card>
+    </div>
   </v-container>
 </template>
 
@@ -35,56 +52,23 @@ export default {
   name: "ViewLogs",
   data() {
     return {
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237
-        },
-        {
-          name: "Eclair",
-          calories: 262
-        },
-        {
-          name: "Cupcake",
-          calories: 305
-        },
-        {
-          name: "Gingerbread",
-          calories: 356
-        },
-        {
-          name: "Jelly bean",
-          calories: 375
-        },
-        {
-          name: "Lollipop",
-          calories: 392
-        },
-        {
-          name: "Honeycomb",
-          calories: 408
-        },
-        {
-          name: "Donut",
-          calories: 452
-        },
-        {
-          name: "KitKat",
-          calories: 518
-        }
-      ]
+      classes: []
     };
   },
   mounted() {
     axios
-      .get("http://localhost:3000/account")
-      .then(response => console.log(response));
+      .get("http://localhost:3000/courses/" + this.$route.params.course_id)
+      .then(response => (this.classes = response.data));
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.course_cards {
+  padding: 10px;
+}
+
+a {
+  text-decoration: none;
+}
+</style>
