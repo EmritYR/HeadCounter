@@ -1,63 +1,36 @@
 <template>
   <v-container>
-    <v-row align="center" justify="center">
-      <v-col cols="12" sm="8" md="4">
-        <v-card class="elevation-12">
-          <v-toolbar color="primary" dark flat>
-            <v-toolbar-title>Login Form</v-toolbar-title>
-          </v-toolbar>
-          <v-card-text>
-            <!--<v-form v-model="valid">-->
-            <!--<v-text-field-->
-            <!--v-model="id"-->
-            <!--prepend-icon="mdi-account"-->
-            <!--label="ID"-->
-            <!--name="id"-->
-            <!--:rules="idRules"-->
-            <!--required-->
-            <!--&gt;</v-text-field>-->
-            <!--<v-text-field-->
-            <!--id="password"-->
-            <!--label="Password"-->
-            <!--name="password"-->
-            <!--prepend-icon="mdi-lock"-->
-            <!--type="password"-->
-            <!--:rules="passwordRules"-->
-            <!--v-model="password"-->
-            <!--&gt;</v-text-field>-->
-            <!--</v-form>-->
-            <form class="add_form">
-              <v-text-field
-                v-model="id"
-                :error-messages="idErrors"
-                :counter="9"
-                label="Student ID"
-                required
-                @input="$v.id.$touch()"
-                @blur="$v.id.$touch()"
-              ></v-text-field>
+    <v-card class="mx-auto" color="#2F3038FF" dark max-width="800">
+      <v-toolbar dark flat>
+        <v-toolbar-title>Login Form</v-toolbar-title>
+      </v-toolbar>
+      <v-card-text>
+        <form class="add_form">
+          <v-text-field
+            v-model="id"
+            :error-messages="idErrors"
+            :counter="9"
+            label="Student ID"
+            required
+            @input="$v.id.$touch()"
+            @blur="$v.id.$touch()"
+          ></v-text-field>
 
-              <v-text-field
-                v-model="password"
-                type="password"
-                :error-messages="passwordErrors"
-                :counter="100"
-                label="Password"
-                required
-                @input="$v.password.$touch()"
-                @blur="$v.password.$touch()"
-              ></v-text-field>
+          <v-text-field
+            v-model="password"
+            type="password"
+            :error-messages="passwordErrors"
+            :counter="100"
+            label="Password"
+            required
+            @input="$v.password.$touch()"
+            @blur="$v.password.$touch()"
+          ></v-text-field>
 
-              <v-btn class="mr-4" @click="login">Login</v-btn>
-            </form>
-          </v-card-text>
-          <v-card-actions>
-            <div class="flex-grow-1"></div>
-            <!--<v-btn color="primary" @click="login">Login</v-btn>-->
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
+          <v-btn class="mr-4" @click="login">Login</v-btn>
+        </form>
+      </v-card-text>
+    </v-card>
   </v-container>
 </template>
 

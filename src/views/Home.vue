@@ -8,7 +8,7 @@
           </v-icon>
           <span class="title font-weight-light">{{ lecturer_name }}</span>
           <v-spacer></v-spacer>
-          <span class="overline font-weight-light"
+          <span id="info_text2" class="overline font-weight-light"
             >Lecturer ID: {{ lecturer_id }}</span
           >
         </v-card-title>
@@ -178,7 +178,7 @@
             </v-card>
           </v-dialog>
 
-          <v-dialog v-model="dialog3" persistent max-width="600px">
+          <v-dialog v-model="dialog4" persistent max-width="600px">
             <template v-slot:activator="{ on }">
               <v-btn
                 class="ma-2"
@@ -230,6 +230,7 @@
         </v-row>
 
         <v-card-text
+          id="info_text1"
           style="margin-left: 40px"
           class="headline font-weight-bold"
         >
@@ -321,7 +322,7 @@ export default {
         "http://localhost:3000/create-student",
         {
           name: this.newStudentName,
-          id: this.newStudentID
+          student_id: this.newStudentID
         },
         {
           headers: { Authorization: `${this.token}` }
@@ -370,8 +371,11 @@ export default {
   },
   created() {},
   mounted() {
-    if (this.lecturer_name === "admin")
+    if (this.lecturer_name === "admin") {
       document.getElementById("admin_panel").style.visibility = "visible";
+      document.getElementById("info_text1").style.visibility = "hidden";
+      document.getElementById("info_text2").style.visibility = "hidden";
+    }
 
     axios
       .get("http://localhost:3000/courses/all/" + this.lecturer_id, {
