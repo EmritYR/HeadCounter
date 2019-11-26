@@ -27,7 +27,6 @@ const client = new Client({
 
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 
 app.use(passport.initialize());
@@ -42,7 +41,7 @@ app.listen(port, () => console.log("App listening on port: " + port));
 
 // Index Route
 app.get("/", (req, res) => {
-  res.send("invaild endpoint");
+  res.status(122).send("invalid endpoint");
 });
 
 /*** Routes ***/
