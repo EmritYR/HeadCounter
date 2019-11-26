@@ -155,7 +155,7 @@ export default {
       this.dialog2 = false;
       axios
         .delete(
-          "http://localhost:3000/delete-student",
+          "delete-student",
           {
             data: {
               class_id: this.class_id,
@@ -174,7 +174,7 @@ export default {
       console.log(this.newAddStudentID, this.class_id);
       axios
         .post(
-          "http://localhost:3000/add-student",
+          "/add-student",
           {
             class_id: this.class_id,
             student_id: this.newAddStudentID
@@ -188,7 +188,7 @@ export default {
     }
   },
   created() {
-    let url = "http://localhost:3000/courses/class/" + this.class_id;
+    let url = "courses/class/" + this.class_id;
     axios.get(url).then(response => {
       this.students = response.data;
       console.log(this.students);

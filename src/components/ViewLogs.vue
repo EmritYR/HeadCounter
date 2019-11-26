@@ -90,12 +90,10 @@ export default {
     };
   },
   created() {
-    axios
-      .get("http://localhost:3000/courses/" + this.course_id)
-      .then(response => {
-        this.classes = response.data;
-        // console.log(this.classes);
-      });
+    axios.get("courses/" + this.course_id).then(response => {
+      this.classes = response.data;
+      // console.log(this.classes);
+    });
   }
 };
 </script>
