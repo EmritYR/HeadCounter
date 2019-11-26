@@ -24,7 +24,7 @@ app.use("/", serveStatic(path.join(__dirname, "/dist")));
 const port = process.env.PORT || 5000;
 
 const client = new Client({
-  connectionString: config.database,
+  connectionString: process.env.DATABASE_URL,
   ssl: true
 });
 
