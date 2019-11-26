@@ -70,7 +70,7 @@ export default {
 
   validations: {
     password: { required, maxLength: maxLength(100) },
-    id: { required, maxLength: maxLength(9), minLength: minLength(9) }
+    id: { required, maxLength: maxLength(9), minLength: minLength(2) }
   },
 
   data: () => ({
@@ -91,7 +91,7 @@ export default {
       const errors = [];
       if (!this.$v.id.$dirty) return errors;
       !this.$v.id.maxLength && errors.push("ID must be at most 9 digits long");
-      !this.$v.id.minLength && errors.push("ID must be at least 9 digits long");
+      !this.$v.id.minLength && errors.push("ID must be at least 2 digits long");
       !this.$v.id.required && errors.push("ID is required.");
       return errors;
     }
