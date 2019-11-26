@@ -8,7 +8,9 @@
           </v-icon>
           <span class="title font-weight-light">{{ lecturer_name }}</span>
           <v-spacer></v-spacer>
-          <span class="overline font-weight-light">Lecturer ID: {{ lecturer_id }}</span>
+          <span class="overline font-weight-light"
+            >Lecturer ID: {{ lecturer_id }}</span
+          >
         </v-card-title>
 
         <v-row style="margin-left: 50px">
@@ -33,18 +35,21 @@
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
+                        v-model="newCourseID"
                         label="Course Code*"
                         required
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
+                        v-model="newCourseName"
                         label="Course Title*"
                         hint="(i.e. 'Software Engineering II')"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
+                        v-model="newCourseDescription"
                         label="Course Description*"
                         hint="This course teaches software engineering principles"
                         persistent-hint
@@ -60,7 +65,7 @@
                 <v-btn color="blue darken-1" text @click="dialog1 = false"
                   >Cancel</v-btn
                 >
-                <v-btn color="blue darken-1" text @click="dialog1 = false"
+                <v-btn color="blue darken-1" text @click="addCourse"
                   >Add Course</v-btn
                 >
               </v-card-actions>
@@ -111,7 +116,7 @@
                 <v-btn color="blue darken-1" text @click="dialog2 = false"
                   >Cancel</v-btn
                 >
-                <v-btn color="blue darken-1" text @click="dialog2 = false"
+                <v-btn color="blue darken-1" text @click="addLecturer"
                   >Add Lecturer</v-btn
                 >
               </v-card-actions>
@@ -181,9 +186,9 @@
             <v-icon large left>
               mdi-library-books
             </v-icon>
-            <span class="title font-weight-light">{{
-              course.course_name
-            }}</span>
+            <span class="title font-weight-light"
+              >{{ course.course_id }} - {{ course.name }}</span
+            >
           </v-card-title>
 
           <v-card-actions>
@@ -205,6 +210,7 @@
 
 // import Introduction from "../components/Introduction";
 // import Feed from "../components/Feed";
+import axios from "axios";
 
 export default {
   // components: { Feed, Introduction },
@@ -212,20 +218,64 @@ export default {
     return {
       lecturer_name: JSON.parse(localStorage.getItem("user")).name,
       lecturer_id: JSON.parse(localStorage.getItem("user")).id,
+      token: localStorage.getItem("token"),
       courses: [],
       dialog1: false,
       dialog2: false,
-      dialog3: false
+      dialog3: false,
+      newCourseName: "",
+      newCourseDescription: "",
+      newCourseID: "",
+      newLecturerID: "",
+      newLecturerName: "",
+      newLecturerPassword: ""
     };
   },
   methods: {
+    addCourse: function() {
+      this.dialog1 = false;
+      axios.post(
+        "http://localhost:3000/add-course",
+        {
+          name: this.newCourseName,
+          url: "",
+          description: this.newCourseDescription,
+          id: this.newCourseID
+        },
+        {
+          headers: { Authorization: `${this.token}` }
+        }
+      );
 
-    // getCourses: function() {
-    //   this.$store
-    //     .dispatch("login", { id, password })
-    //     .then(() => this.$router.push("/"))
-    //     .catch(err => console.log(err));
-    // }
+      this.newCourseID = "";
+      this.newCourseName = "";
+      this.newCourseDescription = "";
+    },
+    addLecturer: function() {
+      this.dialog2 = false;
+      axios.post(
+        "http://localhost:3000/register",
+        {
+          id: this.newLecturerID,
+          name: this.newLecturerName,
+          password: this.newLecturerPassword
+        },
+        {
+          headers: { Authorization: `${this.token}` }
+        }
+      );
+
+      this.newLecturerID = "";
+      this.newLecturerName = "";
+      this.newLecturerPassword = "";
+    }
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/courses/all/" + this.lecturer_id, {
+        headers: { Authorization: `${this.token}` }
+      })
+      .then(response => (this.courses = response.data));
   }
 };
 </script>

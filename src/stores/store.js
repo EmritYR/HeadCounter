@@ -56,22 +56,33 @@ export default new Vuex.Store({
       });
     },
 
-    // getCourses({ commit }) {
+    // axios.get('/user?ID=12345')
+    //     .then(function (response) {
+    //       console.log(response);
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+
+    // getCourses({ commit }, id) {
     //   return new Promise((resolve, reject) => {
     //     commit("auth_request");
     //     axios({
-    //       url: "http://localhost:3000/courses",
+    //       url: "http://localhost:3000/816010709/courses",
     //       method: "GET"
     //     })
     //       .then(resp => {
-    //         const courses = resp.data.user;
+    //         const courses = resp.data;
+    //         console.log(courses);
     //         localStorage.setItem("courses", JSON.stringify(courses));
+    //         // const token = localStorage.getItem("token");
+    //         // axios.defaults.headers.common["Authorization"] = token;
     //         resolve(resp);
     //       })
     //       .catch(err => {
     //         commit("auth_error");
-    //         localStorage.removeItem("token");
-    //         localStorage.removeItem("user");
+    //         // localStorage.removeItem("token");
+    //         // localStorage.removeItem("user");
     //         reject(err);
     //       });
     //   });
@@ -81,6 +92,7 @@ export default new Vuex.Store({
       return new Promise(resolve => {
         commit("logout");
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
       });
