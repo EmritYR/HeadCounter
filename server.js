@@ -15,8 +15,6 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /*** Hosting server for heroku  ***/
 const app = express();
-const router = express.Router();
-
 
 
 app.use("/", serveStatic(path.join(__dirname, "/dist")));
@@ -86,6 +84,7 @@ app.post('/authenticate', (req, res) => {
         return res.json({success: false, msg: 'User not found'});
     }
     else {
+      user = user.rows[0];
       comparePassword(password, user.password_hash, (err, isMatch) => {
         if(err)
           res.status(400).send(err);
