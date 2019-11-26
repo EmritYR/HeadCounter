@@ -61,10 +61,11 @@ app.post('/register', passport.authenticate('jwt', {session:false}), (req, res) 
 
   client.query(sql, (err, result) => {
     if (err) {
-      console.log(err);
       res.status(400).send(err);
     }
-    res.status(201).send(`User added`)
+    else{
+      res.status(201).send(`User added`)
+    }
   });
 });
 
@@ -143,34 +144,36 @@ app.post('/assign-lecturer', passport.authenticate('jwt', {session:false}), (req
 
 
 app.get('/courses/:course_id', passport.authenticate('jwt', {session:false}), (req, res) => {
-  const cid = parseInt(req.params.course_id);
-  var sql = SqlString.format('SELECT * FROM class WHERE course_id = ?', [[cid]]);
+  const cid = req.params.course_id;
+  var sql = SqlString.format('SELECT * FROM class WHERE course_id = ?', [cid]);
 
   client.query(sql, (err, result) => {
     if (err) {
       console.log(err);
       res.status(400).send(err);
     }
-    res.status(201).send(result.rows)
+    else
+      res.status(201).send(result.rows)
   });
 });
 
 
-// app.get('/courses/:course_id/:class_id', passport.authenticate('jwt', {session:false}), (req, res) => {
-//   const lid = parseInt(req.params.class_id);
-//   const cid = parseInt(req.params.course_id);
-//   var sql = SqlString.format('SELECT * FROM attendance_log WHERE ');
-//
-//   client.query(sql, (err, result) => {
-//     if (err) {
-//       console.log(err);
-//       res.status(400).send(err);
-//     }
-//     res.status(201).send(`Course added`)
-//   });
-// });
+app.get('/courses/class/:class_id', passport.authenticate('jwt', {session:false}), (req, res) => {
+  const cid = parseInt(req.params.class_id);
+  var sql = SqlString.format('SELECT * FROM attendance_log WHERE class_id = ?', [cid]);
 
-app.get("/:id/courses", passport.authenticate('jwt', {session:false}), (req, res) => {
+  client.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+    else
+      res.status(201).send(result.rows)
+  });
+});
+
+
+app.get("/courses/all/:id", passport.authenticate('jwt', {session:false}), (req, res) => {
   const id = parseInt(req.params.id);
 
   var sql = SqlString.format('SELECT course.course_id, course.name FROM course JOIN course_lecturers ON course_lecturers.course_id = course.course_id WHERE course_lecturers.lecturer_id = ?', [id]);
