@@ -271,7 +271,6 @@ app.get(
 
 app.get(
   "/account",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     client.query("SELECT * FROM lecturer ", function(err, result) {
       if (err) {
