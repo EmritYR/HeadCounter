@@ -7,7 +7,7 @@
             mdi-book-open
           </v-icon>
           <span class="title font-weight-light"
-            >Classes for {{ this.$route.params.course_id }} -
+            >Class Sessions for {{ this.$route.params.course_id }} -
             {{ this.$route.params.course_name }}</span
           >
           <v-spacer></v-spacer>
@@ -17,7 +17,7 @@
           style="margin-left: 40px"
           class="headline font-weight-bold"
         >
-          Here's a list of the courses that you currently lecture.
+          Here's a list of it's class sessions that you taught.
         </v-card-text>
       </v-card>
     </div>
@@ -28,14 +28,46 @@
             <v-icon large left>
               mdi-presentation
             </v-icon>
-            <span class="title font-weight-light"
+            <span class="title font-weight-thin"
               >{{ classSession.type }} - {{ classSession.location }}</span
             >
           </v-card-title>
 
+          <v-row>
+            <v-card-text style="margin-left: 60px">
+              <v-icon style="margin-top: 0" left>
+                mdi-timer
+              </v-icon>
+              <span style="margin-top: 0" class=" font-weight-light">{{
+                classSession.duration
+              }}</span>
+            </v-card-text>
+
+            <v-card-text style="margin-left: 60px">
+              <v-icon style="margin-top: 0" left>
+                mdi-calendar
+              </v-icon>
+              <span style="margin-top: 0" class="font-weight-light">{{
+                classSession.start_time
+              }}</span>
+            </v-card-text>
+          </v-row>
           <v-card-actions>
-            <v-list-item class="grow">
-              <v-btn class="ma-2" outlined color="teal">View {{classSession.type}} Logs</v-btn>
+            <v-list-item style="margin-left: 35px" class="grow">
+              <router-link
+                :to="{
+                  name: 'ViewLecture',
+                  params: {
+                    class_id: classSession.id,
+                    timestamp: classSession.start_time,
+                    course_id: classSession.course_id
+                  }
+                }"
+              >
+                <v-btn class="ma-2" outlined color="teal"
+                  >View {{ classSession.type }} Logs</v-btn
+                >
+              </router-link>
             </v-list-item>
           </v-card-actions>
         </v-card>
@@ -58,7 +90,9 @@ export default {
   mounted() {
     axios
       .get("http://localhost:3000/courses/" + this.$route.params.course_id)
-      .then(response => (this.classes = response.data));
+      .then(response => {
+        this.classes = response.data;
+      });
   }
 };
 </script>

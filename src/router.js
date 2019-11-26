@@ -79,7 +79,8 @@ const router = new Router({
       component: () => import("./components/ViewLecture.vue"),
       meta: {
         requiresAuth: true
-      }
+      },
+      props: true
     },
     {
       path: "/login",

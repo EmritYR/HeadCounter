@@ -101,13 +101,9 @@ export default {
       this.$v.$touch();
       let id = this.id;
       let password = this.password;
-      console.log("id is " + id + " and password is " + password);
       this.$store
         .dispatch("login", { id, password })
         .then(() => this.$router.push("/"))
-        // .then(function() {
-        //   this.$router.push("/");
-        // })
         .catch(err => console.log(err));
     }
   },

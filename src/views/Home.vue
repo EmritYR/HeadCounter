@@ -194,13 +194,13 @@
             <v-icon large left>
               mdi-library-books
             </v-icon>
-            <span class="title font-weight-light"
+            <span class="title font-weight-thin"
               >{{ course.course_id }} - {{ course.name }}</span
             >
           </v-card-title>
 
           <v-card-actions>
-            <v-list-item class="grow">
+            <v-list-item class="grow" color="teal">
               <v-btn class="ma-2" outlined color="teal">
                 <router-link
                   :to="{
@@ -210,8 +210,9 @@
                       course_name: course.name
                     }
                   }"
-                  >View Logs</router-link
                 >
+                  <span style="color: teal">View Session Logs</span>
+                </router-link>
               </v-btn>
             </v-list-item>
           </v-card-actions>
@@ -321,5 +322,6 @@ export default {
 
 a {
   text-decoration: none;
+  color: teal;
 }
 </style>

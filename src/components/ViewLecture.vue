@@ -1,50 +1,74 @@
 <template>
   <v-container>
-    <h1 class="header" @click="getAll">Lecture 1</h1>
-    <v-simple-table>
-      <template>
-        <thead>
-          <tr>
-            <th class="text-left">Full Name</th>
-            <th class="text-left">Student ID</th>
-            <th class="text-left">Attendance Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in desserts" :key="item.name">
-            <td>{{ item.name }}</td>
-            <td>{{ item.id }}</td>
-            <td>{{ item.status }}</td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
+    <div class="top">
+      <v-card class="mx-auto" color="#002b36" dark max-width="1000">
+        <v-card-title>
+          <v-icon x-large left>
+            mdi-book-open
+          </v-icon>
+          <span class="title font-weight-light"
+            >Class Session for {{ this.$route.params.course_id }}</span
+          >
+          <v-spacer></v-spacer>
+        </v-card-title>
+
+        <v-card-text style="margin-left: 60px">
+          <v-icon style="margin-top: 0" left>
+            mdi-calendar
+          </v-icon>
+          <span style="margin-top: 0" class="font-weight-light">{{
+            this.$route.params.timestamp
+          }}</span>
+        </v-card-text>
+
+        <v-card-text
+          style="margin-left: 40px"
+          class="headline font-weight-bold"
+        >
+          Here's a list of students that attended this class.
+        </v-card-text>
+      </v-card>
+    </div>
+    <div class="bottom">
+      <div class="course_cards" v-for="(student, i) in students" :key="i">
+        <v-card class="mx-auto" color="#001D27" dark max-width="950">
+          <v-card-title>
+            <v-icon large left>
+              mdi-presentation
+            </v-icon>
+            <span class="title font-weight-thin"
+              >{{ student.type }} - {{ student.location }}</span
+            >
+          </v-card-title>
+
+          <v-card-actions>
+            <v-list-item style="margin-left: 35px" class="grow">
+              ><v-btn class="ma-2" outlined color="teal">View Logs</v-btn>
+            </v-list-item>
+          </v-card-actions>
+        </v-card>
+      </div>
+    </div>
   </v-container>
 </template>
 
 <script>
+/*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
+import axios from "axios";
 export default {
   name: "ViewLecture",
   data() {
     return {
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          id: 159,
-          status: "Present"
-        },
-        {
-          name: "Ice cream sandwich",
-          id: 237,
-          status: "Present"
-        },
-        {
-          name: "Eclair",
-          id: 262,
-          status: "Present"
-        }
-      ]
+      students: ""
     };
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/courses/class/" + this.$route.params.class_id)
+      .then(response => {
+        this.classes = response.data;
+        console.log(response.data);
+      });
   }
 };
 </script>
