@@ -155,7 +155,7 @@ export default {
       this.dialog2 = false;
       axios
         .delete(
-          "delete-student",
+          "http://headcounter.herokuapp.com/delete-student",
           {
             data: {
               class_id: this.class_id,
@@ -174,7 +174,7 @@ export default {
       console.log(this.newAddStudentID, this.class_id);
       axios
         .post(
-          "/add-student",
+          "http://headcounter.herokuapp.com/add-student",
           {
             class_id: this.class_id,
             student_id: this.newAddStudentID
@@ -188,7 +188,7 @@ export default {
     }
   },
   created() {
-    let url = "courses/class/" + this.class_id;
+    let url = "http://headcounter.herokuapp.com/courses/class/" + this.class_id;
     axios.get(url).then(response => {
       this.students = response.data;
       console.log(this.students);

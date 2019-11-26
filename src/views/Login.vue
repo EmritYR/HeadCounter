@@ -2,7 +2,7 @@
   <v-container>
     <v-card class="mx-auto" color="#2F3038FF" dark max-width="800">
       <v-toolbar dark flat>
-        <v-toolbar-title>Login Form</v-toolbar-title>
+        <v-toolbar-title>Login to Headcounter.</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
         <form class="add_form">
@@ -10,7 +10,7 @@
             v-model="id"
             :error-messages="idErrors"
             :counter="9"
-            label="Student ID"
+            label="Lecturer ID or Administrator ID"
             required
             @input="$v.id.$touch()"
             @blur="$v.id.$touch()"

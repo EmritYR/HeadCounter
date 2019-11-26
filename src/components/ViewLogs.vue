@@ -90,7 +90,7 @@ export default {
     };
   },
   created() {
-    axios.get("courses/" + this.course_id).then(response => {
+    axios.get("http://headcounter.herokuapp.com/courses/" + this.course_id).then(response => {
       this.classes = response.data;
       // console.log(this.classes);
     });
