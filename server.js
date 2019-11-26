@@ -15,6 +15,9 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 /*** Hosting server for heroku  ***/
 const app = express();
+const router = express.Router();
+
+
 
 app.use("/", serveStatic(path.join(__dirname, "/dist")));
 
@@ -79,12 +82,10 @@ app.post('/authenticate', (req, res) => {
   client.query(sql, (err, user) => {
     if(err)
       res.status(400).send(err);
-    else {
-      if(!user) {
+    else if(!user.rows[0]) {
         return res.json({success: false, msg: 'User not found'});
-      }
-
-      user = user.rows[0];
+    }
+    else {
       comparePassword(password, user.password_hash, (err, isMatch) => {
         if(err)
           res.status(400).send(err);
@@ -106,6 +107,7 @@ app.post('/authenticate', (req, res) => {
         }
       });
     }
+
   });
 });
 
@@ -126,6 +128,7 @@ app.post('/add-course', passport.authenticate('jwt', {session:false}), (req, res
   });
 });
 
+
 app.post('/assign-lecturer', passport.authenticate('jwt', {session:false}), (req, res) => {
   const lid = parseInt(req.body.lecturer_id);
   const cid = req.body.course_id;
@@ -142,6 +145,37 @@ app.post('/assign-lecturer', passport.authenticate('jwt', {session:false}), (req
 });
 
 
+app.post('/add-student', passport.authenticate('jwt', {session:false}), (req, res) => {
+  const class_id = parseInt(req.body.class_id);
+  const student_id = parseInt(req.body.student_id);
+  const current_timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  var sql = SqlString.format('INSERT INTO attendance_log (class_id, student_id, timestamp_date) VALUES (?,?,?)', [class_id, student_id, current_timestamp]);
+
+  client.query(sql, (err, result) => {
+    if (err) {
+      res.status(400).send(err);
+    }
+    else
+      res.status(201).send(`Student added`)
+  });
+});
+
+
+app.delete('/delete-student', passport.authenticate('jwt', {session:false}), (req, res) => {
+  const class_id = parseInt(req.body.class_id);
+  const student_id = parseInt(req.body.student_id);
+  var sql = SqlString.format('DELETE FROM attendance_log WHERE class_id = ? AND student_id = ?', [class_id, student_id]);
+
+  client.query(sql, (err, result) => {
+    if (err) {
+      res.status(400).send(err);
+    }
+    else
+      res.status(201).send(`Student remove`)
+  });
+});
+
+
 
 app.get('/courses/:course_id', passport.authenticate('jwt', {session:false}), (req, res) => {
   const cid = req.params.course_id;
@@ -149,7 +183,6 @@ app.get('/courses/:course_id', passport.authenticate('jwt', {session:false}), (r
 
   client.query(sql, (err, result) => {
     if (err) {
-      console.log(err);
       res.status(400).send(err);
     }
     else
@@ -160,7 +193,7 @@ app.get('/courses/:course_id', passport.authenticate('jwt', {session:false}), (r
 
 app.get('/courses/class/:class_id', passport.authenticate('jwt', {session:false}), (req, res) => {
   const cid = parseInt(req.params.class_id);
-  var sql = SqlString.format('SELECT * FROM attendance_log WHERE class_id = ?', [cid]);
+  var sql = SqlString.format('SELECT student.student_id, student.name FROM attendance_log JOIN student ON student.student_id = attendance_log.student_id WHERE class_id = ?', [cid]);
 
   client.query(sql, (err, result) => {
     if (err) {
