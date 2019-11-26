@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const SqlString = require("sqlstring");
 const { Client } = require("pg");
-const config = require("./config/database");
+const config = require("./src/config/database");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 
