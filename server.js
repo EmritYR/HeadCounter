@@ -18,7 +18,7 @@ const app = express();
 
 app.use("/", serveStatic(path.join(__dirname, "/dist")));
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 const client = new Client({
   connectionString: config.database,

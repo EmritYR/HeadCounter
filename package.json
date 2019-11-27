@@ -15,6 +15,7 @@
     "core-js": "^2.6.5",
     "express": "^4.17.1",
     "jsonwebtoken": "*",
+    "nodemon": "^2.0.1",
     "passport": "*",
     "passport-jwt": "*",
     "path": "^0.12.7",

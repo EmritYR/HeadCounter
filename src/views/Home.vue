@@ -300,7 +300,7 @@ export default {
     addCourse: function() {
       this.dialog1 = false;
       axios.post(
-        "http://headcounter.herokuapp.com/add-course",
+        "http://localhost:3000/add-course",
         {
           name: this.newCourseName,
           url: "",
@@ -319,7 +319,7 @@ export default {
     createStudent: function() {
       this.dialog4 = false;
       axios.post(
-        "http://headcounter.herokuapp.com/create-student",
+        "http://localhost:3000/create-student",
         {
           name: this.newStudentName,
           student_id: this.newStudentID
@@ -336,7 +336,7 @@ export default {
       this.dialog2 = false;
 
       axios.post(
-        "http://headcounter.herokuapp.com/register",
+        "http://localhost:3000/register",
         {
           id: this.newLecturerID,
           name: this.newLecturerName,
@@ -355,7 +355,7 @@ export default {
       this.dialog3 = false;
 
       axios.post(
-        "http://headcounter.herokuapp.com/assign-lecturer",
+        "http://localhost:3000/assign-lecturer",
         {
           lecturer_id: this.assignLecturerID,
           course_id: this.assignCourseID
@@ -378,7 +378,7 @@ export default {
     }
 
     axios
-      .get("http://headcounter.herokuapp.com/courses/all/" + this.lecturer_id, {
+      .get("http://localhost:3000/courses/all/" + this.lecturer_id, {
         headers: { Authorization: `${this.token}` }
       })
       .then(response => (this.courses = response.data));
